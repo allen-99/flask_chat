@@ -194,7 +194,18 @@ def get_all_messages(current_user):
 @app.route('/chat/<message_id>', methods=['GET'])
 @token_required
 def get_one_message(current_user, message_id):
-    return ''
+    message = Message.query.filter_by(id=message_id, user_id=current_user.public_id).first()
+
+    if not message:
+        return jsonify({'message': 'no message'})
+
+    message_data = {}
+    message_data['id'] = message.id
+    message_data['text'] = message.text
+    message_data['user_id'] = message.user_id
+    message_data['user_name'] = message.user_name
+
+    return jsonify({'message': message_data})
 
 
 @app.route('/chat', methods=['POST'])
@@ -212,7 +223,14 @@ def create_message(current_user):
 @app.route('/chat/<message_id>', methods=['DELETE'])
 @token_required
 def delete_message(current_user, message_id):
-    return ''
+    message = Message.query.filter_by(id=message_id, user_id=current_user.public_id).first()
+
+    if not message:
+        return jsonify({'message': 'no message for delete'})
+
+    db.session.delete(message)
+    db.session.commit()
+    return jsonify({'message': 'message was deleted'})
 
 
 @app.route('/hello', methods=['GET'])
