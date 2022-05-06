@@ -59,13 +59,13 @@ def token_required(f):
             return jsonify({'message': 'token is invalid'})
 
         return f(current_user, *args, **kwargs)
+
     return decorated
 
 
 @app.route('/user', methods=['GET'])
 @token_required
 def get_users(current_user):
-
     if not current_user.admin:
         return jsonify({'message': 'permission denied'})
     users = User.query.all()
@@ -176,7 +176,19 @@ def login():
 @app.route('/chat', methods=['GET'])
 @token_required
 def get_all_messages(current_user):
-    return ''
+    messages = Message.query.filter_by(user_id=current_user.public_id).all()
+
+    output = []
+
+    for message in messages:
+        message_data = {}
+        message_data['id'] = message.id
+        message_data['text'] = message.text
+        message_data['user_id'] = message.user_id
+        message_data['user_name'] = message.user_name
+        output.append(message_data)
+
+    return jsonify({'messages from one user': output})
 
 
 @app.route('/chat/<message_id>', methods=['GET'])
@@ -185,10 +197,10 @@ def get_one_message(current_user, message_id):
     return ''
 
 
-@app.route('/chat/', methods=['POST'])
+@app.route('/chat', methods=['POST'])
 @token_required
 def create_message(current_user):
-    data = request.json()
+    data = request.get_json()
 
     new_message = Message(text=data['text'], user_id=current_user.public_id, user_name=current_user.name)
     db.session.add(new_message)
