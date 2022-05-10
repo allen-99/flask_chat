@@ -1,15 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
+<h1 class="title text-center">
   Welcome, {{ name }}!
-    {% for message in messages %}
-      <h2>
-        {{message.user_name}}
-      </h2>
-      <div>
-        {{message.text}}
-      </div>
-    {% endfor %}
 </h1>
+<form class="form-horizontal" method="POST" action="/chat">
+  <div class="form-group">
+      <label class="control-label " for="message_text"> Message:</label>
+      <div class="">
+        <input type="text" class="form-control" id="message_text" name="message_text" placeholder="Enter message text">
+      </div>
+      <div class="">
+       <button type="submit btn btn-default" class="btn btn-default">Send</button>
+      </div>
+      <div class="form-group">
+    </div>
+  </div>
+</form>
+{% for message in messages %}
+ <div class="row my_message" style="border-radius: 0.5em;
+                                    background-color: rgba(255,255,255, 0.2);
+                                    padding: 10px;
+                                    margin: 5px">
+  <strong class=".col-md-4 text-left ">
+    {{message.user_name}}
+  </strong>
+  <p class=".col-md-4 text-left">
+    {{message.text}}
+  </p>
+ </div>
+{% endfor %}
+
 {% endblock %}
