@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Welcome, {{ name }}!
+    {% for message in messages %}
+      <h2>
+        {{message.user_name}}
+      </h2>
+      <div>
+        {{message.text}}
+      </div>
+    {% endfor %}
+</h1>
+{% endblock %}
