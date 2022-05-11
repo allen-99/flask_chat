@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title text-center">
+<h1 class="title text-center"  style="padding: 5px;">
   Welcome, {{ name }}!
 </h1>
 <form class="form-horizontal" method="POST" action="/chat">
-  <div class="form-group">
-      <label class="control-label " for="message_text"> Message:</label>
-      <div class="">
-        <input type="text" class="form-control" id="message_text" name="message_text" placeholder="Enter message text">
-      </div>
-      <div class="">
-       <button type="submit btn btn-default" class="btn btn-default">Send</button>
-      </div>
-      <div class="form-group">
+    <div class="form-group">
+        <div class="columns" style="padding: 5px;">
+        <div class="column is-four-fifths">
+             <input type="text" class="input" id="message_text" name="message_text" placeholder="Enter message text">
+        </div>
+        <div class="column">
+            <button type="submit btn btn-default" class="button is-primary ">Send</button>
+        </div>
     </div>
-  </div>
+    </div>
 </form>
 {% for message in messages %}
  <div class="row my_message" style="border-radius: 0.5em;
