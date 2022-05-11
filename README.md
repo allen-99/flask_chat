@@ -13,6 +13,13 @@ exit()
 ```
 pip install -r requirements.txt
 ```
+## Создать файл `config.py` в папке `chat`. Пример файла:
+```
+SQLALCHEMY_DATABASE_URI = "SQLITE:///chat.db"
+SECRET_KEY = 'SECRET_KEY'
+
+```
+
 # Запуск из корнейвой папки
 ```
 python app.py
